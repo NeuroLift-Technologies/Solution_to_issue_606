@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "rootDir": "./",
+    "outDir": "build",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true
+  },
+  "include": [
+    "FUNCTIONS/**/*.ts",
+    "TESTS/**/*.ts",
+    "typings/**/*.d.ts"
+  ],
+  "exclude": ["build", "node_modules"]
+}

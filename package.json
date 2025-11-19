@@ -1,0 +1,19 @@
+{
+  "name": "solution_to_issue_606",
+  "version": "1.0.0",
+  "description": "Reference implementation for TOI–OTOI governance solving DeepMind Deliberate Lab issue #606.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test \"build/TESTS/**/*.js\""
+  },
+  "keywords": [
+    "TOI",
+    "OTOI",
+    "Deliberate Lab",
+    "governance"
+  ],
+  "author": "CODEX",
+  "license": "MIT",
+  "type": "commonjs"
+}
