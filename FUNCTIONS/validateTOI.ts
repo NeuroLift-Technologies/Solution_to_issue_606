@@ -16,7 +16,7 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
 
 const ensureArrayOfStrings = (value: unknown, pathLabel: string, errors: ValidationError[]) => {
   if (!Array.isArray(value) || !value.every((item) => typeof item === 'string' && item.trim().length > 0)) {
-    errors.push({ path: pathLabel, message: 'must be a non-empty array of strings' });
+    errors.push({ path: pathLabel, message: 'must be an array of non-empty strings' });
   }
 };
 
