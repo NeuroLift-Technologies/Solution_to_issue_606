@@ -1,0 +1,42 @@
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+import Ajv, { ErrorObject } from 'ajv';
+import { TOI, ValidationError, ValidationResult } from './types.js';
+
+const schemaPath = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../SCHEMAS/toi.schema.json');
+let validatorPromise: Promise<Ajv> | undefined;
+
+async function getValidator(): Promise<Ajv> {
+  if (!validatorPromise) {
+    validatorPromise = readFile(schemaPath, 'utf-8').then((schemaRaw) => {
+      const schema = JSON.parse(schemaRaw);
+      const ajv = new Ajv({ allErrors: true, strict: true });
+      ajv.addSchema(schema, 'toi');
+      return ajv;
+    });
+  }
+  return validatorPromise;
+}
+
+function formatErrors(errors: ErrorObject<string, Record<string, any>, unknown>[] = []): ValidationError[] {
+  return errors.map((error) => ({
+    message: error.message ?? 'Unknown validation error',
+    instancePath: error.instancePath,
+  }));
+}
+
+export async function validateTOI(candidate: unknown): Promise<ValidationResult & { toi?: TOI }> {
+  const ajv = await getValidator();
+  const validate = ajv.getSchema('toi');
+  if (!validate) {
+    throw new Error('TOI schema failed to initialize.');
+  }
+  const valid = validate(candidate) as boolean;
+  if (valid) {
+    return { valid: true, toi: candidate as TOI };
+  }
+  return {
+    valid: false,
+    errors: formatErrors(validate.errors ?? []),
+  };
+}
