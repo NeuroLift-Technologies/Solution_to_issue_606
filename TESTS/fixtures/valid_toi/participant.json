@@ -1,0 +1,35 @@
+{
+  "toi_version": "v1.0",
+  "agent": {
+    "identity": {
+      "name": "Fixture Participant",
+      "role": "participant",
+      "description": "Fixture for validation tests."
+    },
+    "capabilities": [
+      "Mirror prompts",
+      "Track commitments"
+    ],
+    "constraints": [
+      "No unprompted actions"
+    ],
+    "initiation_rights": {
+      "can_initiate": false,
+      "requires_human_review": true,
+      "allowed_channels": ["participant_dm"],
+      "escalation_paths": ["moderator"]
+    }
+  },
+  "interaction_contract": {
+    "accessibility": {
+      "reading_level": "middle_school",
+      "max_tokens_per_turn": 150,
+      "formatting_preferences": ["short_paragraphs"]
+    },
+    "memory_management": {
+      "scope": "participant",
+      "persistence": "short_term",
+      "access_control": ["participant"]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "toi_version": "",
+  "agent": {
+    "identity": {
+      "name": "",
+      "role": "participant",
+      "description": ""
+    },
+    "capabilities": [],
+    "constraints": [],
+    "initiation_rights": {
+      "can_initiate": "yes",
+      "requires_human_review": null,
+      "allowed_channels": [],
+      "escalation_paths": []
+    }
+  },
+  "interaction_contract": {
+    "accessibility": {
+      "reading_level": "",
+      "max_tokens_per_turn": 0,
+      "formatting_preferences": []
+    },
+    "memory_management": {
+      "scope": "invalid",
+      "persistence": "always",
+      "access_control": []
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neuro-lift.org/schemas/toi.schema.json",
+  "title": "Terms of Interaction",
+  "type": "object",
+  "required": ["toi_version", "agent", "interaction_contract"],
+  "properties": {
+    "toi_version": { "type": "string", "pattern": "^v\\d+\\.\\d+$" },
+    "agent": {
+      "type": "object",
+      "required": ["identity", "capabilities", "constraints", "initiation_rights"],
+      "properties": {
+        "identity": {
+          "type": "object",
+          "required": ["name", "role", "description"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "role": { "type": "string", "minLength": 1 },
+            "description": { "type": "string", "minLength": 1 }
+          }
+        },
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "constraints": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "initiation_rights": {
+          "type": "object",
+          "required": ["can_initiate", "requires_human_review", "allowed_channels", "escalation_paths"],
+          "properties": {
+            "can_initiate": { "type": "boolean" },
+            "requires_human_review": { "type": "boolean" },
+            "allowed_channels": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "escalation_paths": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "interaction_contract": {
+      "type": "object",
+      "required": ["accessibility", "memory_management"],
+      "properties": {
+        "accessibility": {
+          "type": "object",
+          "required": ["reading_level", "max_tokens_per_turn", "formatting_preferences"],
+          "properties": {
+            "reading_level": { "type": "string", "minLength": 1 },
+            "max_tokens_per_turn": { "type": "number", "exclusiveMinimum": 0 },
+            "formatting_preferences": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "neurodivergent_considerations": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "memory_management": {
+          "type": "object",
+          "required": ["scope", "persistence", "access_control"],
+          "properties": {
+            "scope": { "type": "string", "enum": ["session", "participant", "global"] },
+            "persistence": { "type": "string", "enum": ["ephemeral", "short_term", "long_term"] },
+            "access_control": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    }
+  }
+}
