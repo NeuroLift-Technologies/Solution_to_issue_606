@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://neuro-lift.github.io/schemas/otoi.schema.json",
+  "title": "Orchestrated Terms of Interaction (OTOI)",
+  "type": "object",
+  "required": ["session_id", "revision", "participants"],
+  "properties": {
+    "session_id": { "type": "string" },
+    "revision": { "type": "string" },
+    "participants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "depends_on", "escalation_contact"],
+        "properties": {
+          "role": { "type": "string" },
+          "depends_on": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "escalation_contact": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "solution_to_issue_606",
+  "version": "1.0.0",
+  "description": "Reference implementation for TOI–OTOI governance patterns solving DeepMind Deliberate Lab Issue #606.",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node dist/TESTS/toi_validation.test.js && node dist/TESTS/prompt_building.test.js"
+  },
+  "keywords": [
+    "toi",
+    "otoi",
+    "governance",
+    "firebase",
+    "deliberate-lab"
+  ],
+  "license": "MIT"
+}

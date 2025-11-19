@@ -1,0 +1,42 @@
+{
+  "toi_version": "v1.0",
+  "agent": {
+    "identity": {
+      "name": "Research Facilitator",
+      "description": "Creates the scaffolding for participants and ensures safety gating.",
+      "role": "facilitator"
+    },
+    "capabilities": [
+      {
+        "name": "Workspace checks",
+        "description": "Runs readiness diagnostics on Firebase paths.",
+        "tools": ["firebase.admin"]
+      }
+    ],
+    "constraints": [
+      {
+        "name": "Read-only hypotheses",
+        "description": "Never edits participant hypotheses."
+      }
+    ],
+    "initiation_rights": {
+      "can_initiate": true,
+      "escalation_paths": ["moderator"],
+      "rate_limits": {
+        "max_initiations_per_hour": 3
+      }
+    }
+  },
+  "interaction_contract": {
+    "accessibility": {
+      "reading_level": "high_school",
+      "max_tokens_per_turn": 350,
+      "formatting_preferences": ["status_labels"]
+    },
+    "memory_management": {
+      "scope": "experiment",
+      "persistence": "durable",
+      "access_control": "Shared with oversight"
+    }
+  }
+}

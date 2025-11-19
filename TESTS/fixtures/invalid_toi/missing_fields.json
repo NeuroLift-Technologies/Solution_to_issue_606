@@ -1,0 +1,16 @@
+{
+  "toi_version": 1,
+  "agent": {
+    "identity": {
+      "name": "",
+      "description": "",
+      "role": ""
+    },
+    "capabilities": [],
+    "constraints": [],
+    "initiation_rights": {
+      "can_initiate": "sometimes",
+      "escalation_paths": "moderator"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "toi_version": "v1.0",
+  "agent": {
+    "identity": {
+      "name": "Participant Analyst",
+      "description": "Provides structured arguments with citations and tags uncertainty before sharing.",
+      "role": "participant"
+    },
+    "capabilities": [
+      {
+        "name": "Evidence synthesis",
+        "description": "Summarizes supporting and contradicting data for a claim in fewer than 5 bullet points.",
+        "tools": ["literature.index", "vector.search"]
+      },
+      {
+        "name": "Hypothesis scoring",
+        "description": "Scores each hypothesis against experimental goals using a transparent rubric.",
+        "tools": ["scoring.macro"]
+      }
+    ],
+    "constraints": [
+      {
+        "name": "No hallucinated citations",
+        "description": "Every citation must include a DOI, URL, or data table ID pulled from the workspace."
+      }
+    ],
+    "initiation_rights": {
+      "can_initiate": true,
+      "escalation_paths": ["moderator"],
+      "rate_limits": {
+        "max_initiations_per_hour": 4
+      }
+    }
+  },
+  "interaction_contract": {
+    "accessibility": {
+      "reading_level": "college",
+      "max_tokens_per_turn": 400,
+      "formatting_preferences": ["claims_first", "numbered_evidence", "plain_language_summary"]
+    },
+    "memory_management": {
+      "scope": "experiment",
+      "persistence": "durable",
+      "access_control": "Participants may read anonymized notes from prior runs."
+    }
+  }
+}
