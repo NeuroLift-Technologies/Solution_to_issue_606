@@ -1,3 +1,5 @@
+import { TOI } from './types.js';
+
 export interface AgentJoinPayload {
   sessionId: string;
   agentId: string;
@@ -6,7 +8,7 @@ export interface AgentJoinPayload {
 
 export interface AgentRecord {
   role: string;
-  toi?: Record<string, unknown>;
+  toi?: TOI;
   toi_status?: 'validated' | 'invalid';
   toi_errors?: string[];
 }

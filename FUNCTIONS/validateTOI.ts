@@ -10,7 +10,7 @@ async function getValidator(): Promise<Ajv> {
   if (!validatorPromise) {
     validatorPromise = readFile(schemaPath, 'utf-8').then((schemaRaw) => {
       const schema = JSON.parse(schemaRaw);
-      const ajv = new Ajv({ allErrors: true, strict: true });
+      const ajv = new Ajv({ allErrors: true, strict: true, validateSchema: false });
       ajv.addSchema(schema, 'toi');
       return ajv;
     });
