@@ -1,0 +1,10 @@
+{
+  "name": "solution_to_issue_606",
+  "version": "1.0.0",
+  "description": "Reference implementation of TOI–OTOI governance layer for Deliberate Lab Issue #606",
+  "type": "module",
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "test": "tsc --project tsconfig.json && node dist/TESTS/runTests.js"
+  }
+}

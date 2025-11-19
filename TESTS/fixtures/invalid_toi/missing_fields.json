@@ -1,0 +1,29 @@
+{
+  "toiVersion": "v1.0",
+  "agent": {
+    "identity": {
+      "role": "Invalid Agent"
+    },
+    "capabilities": [],
+    "constraints": [],
+    "initiationRights": {
+      "canInitiateWithoutPrompt": true,
+      "maxInitiationsPerSession": -1,
+      "escalationPaths": [],
+      "conditions": []
+    }
+  },
+  "interactionContract": {
+    "accessibility": {
+      "readingLevel": "college",
+      "maxTokensPerTurn": 10,
+      "formattingPreferences": [],
+      "neurodivergentConsiderations": []
+    },
+    "memoryManagement": {
+      "scope": "invalid_scope",
+      "persistence": "durable",
+      "accessControl": []
+    }
+  }
+}

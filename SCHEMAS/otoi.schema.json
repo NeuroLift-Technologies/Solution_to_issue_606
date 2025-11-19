@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Orchestrated Terms of Interaction",
+  "type": "object",
+  "required": ["session", "agents"],
+  "properties": {
+    "session": {
+      "type": "object",
+      "required": ["sessionId", "purpose"],
+      "properties": {
+        "sessionId": { "type": "string" },
+        "purpose": { "type": "string" },
+        "governanceVersion": { "type": "string" }
+      }
+    },
+    "agents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "toiFile", "handoffPolicy"],
+        "properties": {
+          "role": { "type": "string" },
+          "toiFile": { "type": "string" },
+          "handoffPolicy": {
+            "type": "object",
+            "required": ["upstream", "downstream"],
+            "properties": {
+              "upstream": { "type": "array", "items": { "type": "string" } },
+              "downstream": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "sharedContext": {
+            "type": "object",
+            "properties": {
+              "memoryScope": { "type": "string" },
+              "redactionRules": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    }
+  }
+}
