@@ -1,0 +1,32 @@
+{
+  "toi_version": "v1.0",
+  "agent": {
+    "identity": {
+      "name": "Bad Agent",
+      "description": "Invalid because capabilities missing",
+      "role": "test"
+    },
+    "constraints": [
+      { "rule": "none", "rationale": "test" }
+    ],
+    "initiation_rights": {
+      "allowProactiveMessages": false,
+      "requiresHumanApproval": true,
+      "escalationPaths": [],
+      "conditions": []
+    }
+  },
+  "interaction_contract": {
+    "accessibility": {
+      "readingLevel": "adult",
+      "maxTokensPerTurn": 100,
+      "formattingPreferences": [],
+      "preferredMedia": ["text"]
+    },
+    "memoryManagement": {
+      "scope": "session",
+      "persistence": "volatile",
+      "accessControl": []
+    }
+  }
+}
