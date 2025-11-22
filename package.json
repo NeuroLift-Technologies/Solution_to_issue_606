@@ -6,5 +6,8 @@
   "scripts": {
     "build": "tsc --project tsconfig.json",
     "test": "tsc --project tsconfig.json && node dist/TESTS/runTests.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12"
   }
 }
