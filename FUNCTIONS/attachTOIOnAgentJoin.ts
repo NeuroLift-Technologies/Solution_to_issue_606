@@ -19,7 +19,7 @@ export interface AgentWriter {
 }
 
 export interface TOIRepository {
-  getTOIForRole(role: string): Promise<TOIContract>;
+  getTOIForRole(role: string): Promise<unknown>;
 }
 
 export class FileSystemTOIRepository implements TOIRepository {
@@ -28,10 +28,10 @@ export class FileSystemTOIRepository implements TOIRepository {
     private readonly fileResolver: (role: string) => string = role => `${role}.v1.json`
   ) {}
 
-  async getTOIForRole(role: string): Promise<TOIContract> {
+  async getTOIForRole(role: string): Promise<unknown> {
     const resolvedFile = path.join(this.directory, this.fileResolver(role));
     const file = await readFile(resolvedFile, 'utf-8');
-    return JSON.parse(file) as TOIContract;
+    return JSON.parse(file);
   }
 }
 
@@ -55,14 +55,24 @@ export interface AttachTOIParams {
  * stays portable for local testing.
  */
 export async function attachTOIOnAgentJoin({ agent, repository, writer }: AttachTOIParams): Promise<AgentRecord> {
-  const toi = await repository.getTOIForRole(agent.role);
-  const validation = validateTOI(toi);
-  const updated: AgentRecord = {
-    ...agent,
-    toi,
-    toi_status: validation.valid ? 'validated' : 'invalid',
-    validation_errors: validation.errors
-  };
+  let updated: AgentRecord;
+  try {
+    const toi = await repository.getTOIForRole(agent.role);
+    const validation = validateTOI(toi);
+    updated = {
+      ...agent,
+      toi: validation.valid ? (toi as TOIContract) : undefined,
+      toi_status: validation.valid ? 'validated' : 'invalid',
+      validation_errors: validation.errors
+    };
+  } catch (e) {
+    const message = e instanceof Error ? e.message : 'An unknown error occurred';
+    updated = {
+      ...agent,
+      toi_status: 'invalid',
+      validation_errors: [{ path: 'toi.loading', message: `Failed to load TOI for role ${agent.role}: ${message}` }]
+    };
+  }
 
   await writer.updateAgent(updated);
   return updated;

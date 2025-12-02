@@ -90,8 +90,13 @@ function validateInitiationRights(value: unknown, basePath: string, errors: Vali
   }
 
   if (value.rate_limits) {
-    if (!isRecord(value.rate_limits) || typeof value.rate_limits.max_initiations_per_hour !== 'number' || value.rate_limits.max_initiations_per_hour <= 0) {
-      errors.push({ path: `${basePath}.rate_limits`, message: 'rate_limits must declare a positive max_initiations_per_hour.' });
+    if (!isRecord(value.rate_limits)) {
+      errors.push({ path: `${basePath}.rate_limits`, message: 'rate_limits must be an object.' });
+    } else {
+      const maxInit = value.rate_limits.max_initiations_per_hour;
+      if (typeof maxInit !== 'number' || !Number.isInteger(maxInit) || maxInit <= 0) {
+        errors.push({ path: `${basePath}.rate_limits.max_initiations_per_hour`, message: 'max_initiations_per_hour must be a positive integer.' });
+      }
     }
   }
 
@@ -113,8 +118,9 @@ function validateInteractionContract(value: unknown, basePath: string, errors: V
     if (!['elementary', 'middle_school', 'high_school', 'college'].includes(accessibility.reading_level as string)) {
       errors.push({ path: `${basePath}.accessibility.reading_level`, message: 'reading_level must match schema enum.' });
     }
-    if (typeof accessibility.max_tokens_per_turn !== 'number' || accessibility.max_tokens_per_turn <= 0) {
-      errors.push({ path: `${basePath}.accessibility.max_tokens_per_turn`, message: 'max_tokens_per_turn must be a positive number.' });
+    const maxTokens = accessibility.max_tokens_per_turn;
+    if (typeof maxTokens !== 'number' || !Number.isInteger(maxTokens) || maxTokens <= 0) {
+      errors.push({ path: `${basePath}.accessibility.max_tokens_per_turn`, message: 'max_tokens_per_turn must be a positive integer.' });
     }
     if (!Array.isArray(accessibility.formatting_preferences) || accessibility.formatting_preferences.some(item => typeof item !== 'string')) {
       errors.push({ path: `${basePath}.accessibility.formatting_preferences`, message: 'formatting_preferences must be an array of strings.' });
@@ -154,8 +160,8 @@ export function validateTOI(candidate: unknown): ValidationResult {
 
   const toi = candidate as LooseTOI;
 
-  if (typeof toi.toi_version !== 'string') {
-    errors.push({ path: 'toi_version', message: 'toi_version must be a semantic string such as v1.0.' });
+  if (typeof toi.toi_version !== 'string' || !/^v\d+\.\d+$/.test(toi.toi_version)) {
+    errors.push({ path: 'toi_version', message: 'toi_version must be a semantic string matching vX.Y, e.g., v1.0.' });
   }
 
   if (!isRecord(toi.agent)) {
