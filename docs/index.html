@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOI/OTOI Governance Framework - Deliberate Lab Issue #606</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-badge">Deliberate Lab - Issue #606</div>
+    <h1>Terms of Interaction (TOI)</h1>
+    <p class="hero-subtitle">A contract-driven governance framework for multi-agent deliberation sessions</p>
+    <div class="hero-agents">
+      <span class="agent-chip copilot" title="GitHub Copilot">Copilot</span>
+      <span class="agent-chip gemini" title="Gemini Code Assist">Gemini</span>
+      <span class="agent-chip cursor" title="Cursor AI">Cursor</span>
+      <span class="agent-chip codex" title="OpenAI Codex">Codex</span>
+      <span class="agent-chip claude" title="Claude Code - Orchestrator">Claude Code</span>
+    </div>
+    <p class="hero-collab">5 AI agents collaborating &mdash; Claude Code orchestrating</p>
+  </div>
+</header>
+
+<nav id="nav">
+  <div class="container nav-inner">
+    <a href="#overview">Overview</a>
+    <a href="#roles">Roles</a>
+    <a href="#validator">Validator</a>
+    <a href="#prompt-builder">Prompt Builder</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#pr-review">PR Review</a>
+  </div>
+</nav>
+
+<!-- OVERVIEW -->
+<section id="overview" class="section">
+  <div class="container">
+    <h2>What Problem Does This Solve?</h2>
+    <div class="overview-grid">
+      <div class="card">
+        <div class="card-icon">&#x1F4DC;</div>
+        <h3>The Problem</h3>
+        <p>Google DeepMind's <strong>Deliberate Lab</strong> needs reusable recipe prompt templates for AI agents in structured deliberation sessions. Without governance, agents lack clear boundaries, accessibility contracts, and memory policies.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x2705;</div>
+        <h3>The Solution</h3>
+        <p><strong>TOI (Terms of Interaction)</strong> &mdash; machine-readable JSON contracts that define each agent's identity, capabilities, constraints, initiation rights, and accessibility requirements. <strong>OTOI</strong> orchestrates multiple TOIs in a session.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#x1F9E0;</div>
+        <h3>Key Innovation</h3>
+        <p>Neurodivergent-first design: every agent contract includes reading level targets, token limits, formatting preferences, and explicit support notes for cognitive accessibility.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROLES -->
+<section id="roles" class="section section-alt">
+  <div class="container">
+    <h2>Agent Roles</h2>
+    <p class="section-desc">Click a role to inspect its full TOI contract.</p>
+    <div class="role-tabs" id="role-tabs"></div>
+    <div class="role-detail" id="role-detail">
+      <div class="role-detail-grid">
+        <div class="role-identity" id="role-identity"></div>
+        <div class="role-contract" id="role-contract"></div>
+      </div>
+      <div class="role-json-toggle">
+        <button id="toggle-json-btn" class="btn btn-sm">Show Raw JSON</button>
+      </div>
+      <pre class="role-json hidden" id="role-json"></pre>
+    </div>
+  </div>
+</section>
+
+<!-- VALIDATOR -->
+<section id="validator" class="section">
+  <div class="container">
+    <h2>Live TOI Validator</h2>
+    <p class="section-desc">Paste or edit a TOI JSON document and validate it against the schema in real time.</p>
+    <div class="validator-grid">
+      <div class="validator-input">
+        <label for="validator-textarea">TOI JSON</label>
+        <textarea id="validator-textarea" spellcheck="false"></textarea>
+        <div class="validator-actions">
+          <button id="validate-btn" class="btn">Validate</button>
+          <button id="load-sample-btn" class="btn btn-outline">Load Sample</button>
+          <button id="load-invalid-btn" class="btn btn-outline">Load Invalid Sample</button>
+        </div>
+      </div>
+      <div class="validator-output">
+        <label>Validation Result</label>
+        <div id="validation-result" class="result-box">
+          <p class="muted">Click "Validate" to check your TOI document.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMPT BUILDER -->
+<section id="prompt-builder" class="section section-alt">
+  <div class="container">
+    <h2>System Prompt Builder</h2>
+    <p class="section-desc">See how a TOI contract is deterministically compiled into a system prompt for an LLM agent.</p>
+    <div class="prompt-controls">
+      <label for="prompt-role-select">Select Role:</label>
+      <select id="prompt-role-select"></select>
+      <button id="build-prompt-btn" class="btn">Build Prompt</button>
+    </div>
+    <div class="prompt-output">
+      <div class="prompt-column">
+        <h4>TOI Contract (Input)</h4>
+        <pre id="prompt-input-json"></pre>
+      </div>
+      <div class="prompt-arrow">&#x27A1;</div>
+      <div class="prompt-column">
+        <h4>System Prompt (Output)</h4>
+        <pre id="prompt-output-text" class="prompt-result"></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="architecture" class="section">
+  <div class="container">
+    <h2>Architecture</h2>
+    <div class="arch-flow">
+      <div class="arch-node">
+        <div class="arch-label">TOI JSON</div>
+        <div class="arch-desc">Contract definition</div>
+      </div>
+      <div class="arch-connector">&rarr;</div>
+      <div class="arch-node">
+        <div class="arch-label">Schema Validation</div>
+        <div class="arch-desc">toi.schema.json</div>
+      </div>
+      <div class="arch-connector">&rarr;</div>
+      <div class="arch-node">
+        <div class="arch-label">Prompt Builder</div>
+        <div class="arch-desc">buildSystemPromptFromTOI()</div>
+      </div>
+      <div class="arch-connector">&rarr;</div>
+      <div class="arch-node">
+        <div class="arch-label">Agent Session</div>
+        <div class="arch-desc">Firestore + Cloud Functions</div>
+      </div>
+    </div>
+    <div class="arch-otoi">
+      <h3>OTOI - Orchestrated Terms of Interaction</h3>
+      <p>When multiple agents join a session, the OTOI layer coordinates cross-agent rules, handoff policies, and shared enforcement.</p>
+      <div class="otoi-visual" id="otoi-visual">
+        <div class="otoi-session">
+          <div class="otoi-title">Session: deliberation-2026-001</div>
+          <div class="otoi-agents" id="otoi-agents"></div>
+          <div class="otoi-rules" id="otoi-rules"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PR REVIEW -->
+<section id="pr-review" class="section section-alt">
+  <div class="container">
+    <h2>Multi-Agent PR Review</h2>
+    <p class="section-desc">4 AI agents contributed pull requests. Claude Code orchestrated the review. Here's the breakdown.</p>
+    <div class="pr-grid">
+      <div class="pr-card">
+        <div class="pr-header">
+          <span class="agent-chip copilot">Copilot</span>
+          <span class="pr-number">PR #2</span>
+        </div>
+        <h4>TOI Governance Reference Implementation</h4>
+        <p class="pr-approach"><strong>Approach:</strong> AJV-based validation with iterative review cycles. Merged sub-PR #6 incorporating feedback from Cursor and Gemini.</p>
+        <ul class="pr-highlights">
+          <li>Most polished &mdash; refined through multi-agent code review</li>
+          <li>198-line validator with full AJV integration</li>
+          <li>Lazy-loaded schema with <code>validateSchema: false</code> workaround</li>
+          <li>Co-authored commits with Cursor and Gemini feedback</li>
+        </ul>
+        <div class="pr-stats">
+          <span>27 files</span>
+          <span class="green">+1,078</span>
+          <span class="red">-2</span>
+        </div>
+      </div>
+
+      <div class="pr-card">
+        <div class="pr-header">
+          <span class="agent-chip gemini">Gemini</span>
+          <span class="pr-number">PR #3</span>
+        </div>
+        <h4>TOI/OTOI Reference Implementation</h4>
+        <p class="pr-approach"><strong>Approach:</strong> Zero-dependency architecture. Custom JSON Schema validator (~130 LOC) and hand-rolled test runner using <code>node:assert</code>.</p>
+        <ul class="pr-highlights">
+          <li>Most minimalist &mdash; zero production dependencies</li>
+          <li>Custom <code>simpleJsonValidator.ts</code> covering Draft-07 subset</li>
+          <li>Custom test runner in <code>TESTS/runTests.ts</code></li>
+          <li>Dependency-injected <code>FirestoreLike</code> abstraction</li>
+        </ul>
+        <div class="pr-stats">
+          <span>28 files</span>
+          <span class="green">+1,082</span>
+          <span class="red">-2</span>
+        </div>
+      </div>
+
+      <div class="pr-card">
+        <div class="pr-header">
+          <span class="agent-chip cursor">Cursor</span>
+          <span class="pr-number">PR #4</span>
+        </div>
+        <h4>TOI-OTOI Governance Repo Scaffold</h4>
+        <p class="pr-approach"><strong>Approach:</strong> AJV-based with comprehensive 129-line inline validator. Custom node type shims for ESM compatibility.</p>
+        <ul class="pr-highlights">
+          <li>Most thorough validation &mdash; detailed error paths</li>
+          <li>Inline schema loading with <code>node:url</code> + <code>import.meta.url</code></li>
+          <li>Custom <code>typings/node-shims.d.ts</code> for ESM edge cases</li>
+          <li>Gemini co-authored the <code>validateTOI.ts</code> update</li>
+        </ul>
+        <div class="pr-stats">
+          <span>27 files</span>
+          <span class="green">+1,034</span>
+          <span class="red">-2</span>
+        </div>
+      </div>
+
+      <div class="pr-card">
+        <div class="pr-header">
+          <span class="agent-chip codex">Codex</span>
+          <span class="pr-number">PR #1 (Merged)</span>
+        </div>
+        <h4>Initial Scaffold</h4>
+        <p class="pr-approach"><strong>Approach:</strong> Provided the foundational scaffold that all other PRs built upon. First to establish the directory structure and TOI concept.</p>
+        <ul class="pr-highlights">
+          <li>Foundation layer &mdash; merged into master</li>
+          <li>Established TOI/, SCHEMAS/, FUNCTIONS/, TESTS/ structure</li>
+          <li>Defined the 5 core agent roles</li>
+          <li>Set up TypeScript config and package.json</li>
+        </ul>
+        <div class="pr-stats">
+          <span>Merged</span>
+          <span class="green">baseline</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="orchestrator-note">
+      <div class="pr-header">
+        <span class="agent-chip claude">Claude Code</span>
+        <span class="pr-number">Orchestrator</span>
+      </div>
+      <p><strong>Role:</strong> Reviewed all open PRs, synthesized the approaches, identified strengths/gaps across implementations, and built this demo to showcase the collective solution. Acting on behalf of the repository owner as the coordinating agent.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>TOI/OTOI Governance Framework &mdash; Solution to <a href="https://github.com/PAIR-code/deliberate-lab/issues/606" target="_blank">Deliberate Lab Issue #606</a></p>
+    <p class="footer-sub">Built by 5 AI agents collaborating on a single repository</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
