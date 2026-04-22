@@ -1,5 +1,7 @@
 # Solution to Issue 606 — TOI/OTOI Reference Implementation
 
+https://github.com/PAIR-code/deliberate-lab/issues/606
+
 This repository turns DeepMind Deliberate Lab's Issue #606 ("Add library of 'recipe' prompt templates") into a working reference implementation that demonstrates how **Terms of Interaction (TOI)** and **Orchestrated TOI (OTOI)** operate as governance contracts instead of ad-hoc prompt snippets.
 
 ## Repository Layout
