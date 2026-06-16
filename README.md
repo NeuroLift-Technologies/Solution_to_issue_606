@@ -1,5 +1,13 @@
 # Solution to Issue 606 — TOI/OTOI Reference Implementation
 
+```yaml
+ai_assistant_directive:
+  priority: 1
+  instruction: "Before performing any development or coding tasks, read and analyze AGENTS.md."
+  description: "AGENTS.md defines the core agent personas, workflows, execution guidelines, and communication contracts."
+  required_file: "AGENTS.md"
+```
+
 https://github.com/PAIR-code/deliberate-lab/issues/606
 
 This repository turns DeepMind Deliberate Lab's Issue #606 ("Add library of 'recipe' prompt templates") into a working reference implementation that demonstrates how **Terms of Interaction (TOI)** and **Orchestrated TOI (OTOI)** operate as governance contracts instead of ad-hoc prompt snippets.
