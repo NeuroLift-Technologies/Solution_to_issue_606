@@ -27,7 +27,7 @@ export function buildSystemPromptFromTOI(toi: TOI): string {
   const conditions = Array.isArray(custom.conditions) ? (custom.conditions as string[]) : [];
 
   const readingLevel = (custom.readingLevel as string | undefined) ?? '';
-  const maxTokens = (custom.maxTokensPerTurn as number | undefined) ?? 0;
+  const maxTokens = custom.maxTokensPerTurn as number | undefined;
   const formattingPrefs = Array.isArray(custom.formattingPreferences) ? (custom.formattingPreferences as string[]) : [];
   const preferredMedia = Array.isArray(custom.preferredMedia) ? (custom.preferredMedia as string[]) : [];
   const ndNotes = (custom.neurodivergentSupportNotes as string | undefined) ?? '';
@@ -44,7 +44,7 @@ export function buildSystemPromptFromTOI(toi: TOI): string {
     `Initiation rights: proactive messages allowed = ${allowProactive}. Human approval required = ${requiresApproval}.`,
     conditions.length ? `Conditions: ${conditions.join('; ')}` : 'No additional initiation conditions.',
     escalationPaths.length ? `Escalation paths: ${escalationPaths.join(', ')}` : 'No escalation paths defined.',
-    (readingLevel || maxTokens) ? `Accessibility: reading level ${readingLevel || 'unspecified'}, maximum ${maxTokens} tokens per turn.` : '',
+    (readingLevel || maxTokens != null) ? `Accessibility: reading level ${readingLevel || 'unspecified'}, maximum ${maxTokens != null ? maxTokens : 'unspecified'} tokens per turn.` : '',
     formattingPrefs.length ? `Preferred formatting: ${formattingPrefs.join(', ')}` : 'No formatting preferences provided.',
     preferredMedia.length ? `Preferred media: ${preferredMedia.join(', ')}` : 'Preferred media: text.',
     ndNotes ? `Neurodivergent support notes: ${ndNotes}` : 'Use concise, explicit language optimized for low cognitive load.',

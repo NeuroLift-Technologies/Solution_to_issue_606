@@ -1,17 +1,14 @@
 import { readFile } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 import Ajv from 'ajv';
 import type { TOI, ValidationError, ValidationResult } from './types.js';
 
-// Load the canonical JSON Schema from the @neurolift-technologies/toi package.
-// The package ships schema/toi-1.0.0.schema.json as a stable artifact derived
-// from its authoritative Zod schema. We bypass the package's exports map since
-// the compiled JS is not yet included in the published tarball.
-// fileURLToPath is used instead of .pathname for cross-platform compatibility (Windows).
-const schemaPath = fileURLToPath(new URL(
-  '../node_modules/@neurolift-technologies/toi/schema/toi-1.0.0.schema.json',
-  import.meta.url,
-));
+// Resolve the schema from the project root (process.cwd()) so the path is
+// stable whether this module runs from source or from a compiled dist/ output.
+const schemaPath = path.join(
+  process.cwd(),
+  'node_modules/@neurolift-technologies/toi/schema/toi-1.0.0.schema.json',
+);
 
 let validatorPromise: Promise<Ajv> | undefined;
 

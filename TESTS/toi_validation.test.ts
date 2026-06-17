@@ -18,7 +18,7 @@ describe('TOI validation', () => {
   });
 
   it('rejects invalid TOI input', async () => {
-    const candidate = await loadJson('TESTS/fixtures/invalid_toi/missing_capabilities.json');
+    const candidate = await loadJson('TESTS/fixtures/invalid_toi/missing_author.json');
     const result = await validateTOI(candidate);
     expect(result.valid).toBe(false);
     expect(result.errors).toBeDefined();

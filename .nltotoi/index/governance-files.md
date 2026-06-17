@@ -58,21 +58,14 @@
 | File | Purpose | Trigger | SOP |
 |---|---|---|---|
 | `.github/workflows/validate-governance.yml` | Governance validation (runs validate-governance.sh) | push, pull_request | SOP-NLT-002 |
-| `.github/workflows/repo-governance-check.yml` | Reusable governance check for NLT repos | workflow_call | SOP-NLT-002 |
-| `.github/workflows/agent-commit-format.yml` | Validates agent commit message format on PRs | pull_request | SOP-NLT-001 |
-| `.github/workflows/agent-session-check.yml` | Verifies handoff records exist before PR merge | pull_request | SOP-NLT-001 |
-| `.github/workflows/incident-detection.yml` | Scans commits for credential exposure; opens incident issue | push | SOP-NLT-003 |
-| `.github/workflows/secret-scan-pr.yml` | Scans PR commits for credential exposure; fails check to block merge | pull_request | SOP-NLT-003 |
-| `.github/workflows/org-repo-compliance.yml` | Scans all org repos for mandatory governance files (weekly + manual) | schedule, workflow_dispatch | SOP-NLT-002 |
-| `.github/workflows/agent-profile-validation.yml` | Validates agents/*.md and .github/agents/*.agent.md NLT frontmatter fields | push, pull_request | SOP-NLT-002 |
-| `.github/workflows/org-runner-health.yml` | Monitors org self-hosted runner availability; opens issue if all offline | schedule, workflow_dispatch | SOP-NLT-003 |
-| `.github/workflows/org-actions-policy.yml` | Scans all org repo workflows for non-allowlisted GitHub Actions | schedule, workflow_dispatch | SOP-NLT-003 |
-| `.github/workflows/nltotoi-compliance.yml` | Scans all org repos for nltotoi.json; auto-opens PRs for missing ones | schedule, workflow_dispatch | SOP-NLT-002 |
-| `.github/workflows/nltotoi-check.yml` | Reusable workflow_call to validate nltotoi.json in any NLT repo | workflow_call | SOP-NLT-002 |
-| `.github/workflows/governance-remediation.yml` | Creates governance remediation PRs in non-compliant repos (missing CLAUDE.md/NLT-DEV-OTOI, active-threads.md, agent-log/) | workflow_dispatch | SOP-NLT-002 |
-| `.github/workflows/governance-auto-propagate.yml` | Scheduled org-wide governance propagation — scans all repos nightly and auto-opens remediation PRs | schedule, workflow_dispatch | SOP-NLT-002 |
-| `.github/workflows/issue-auto-assign.yml` | Rule-based issue routing to NLT agents using `agents/registry.json` | issues, workflow_dispatch | — |
-| `.github/workflows/cf-ai-issue-triage.yml` | Cloudflare Workers AI classifier — semantically routes issues to agents | issues, workflow_dispatch | — |
+| `.github/workflows/repo-governance-check.yml` | _(planned)_ Reusable governance check for NLT repos | workflow_call | SOP-NLT-002 |
+| `.github/workflows/agent-commit-format.yml` | _(planned)_ Validates agent commit message format on PRs | pull_request | SOP-NLT-001 |
+| `.github/workflows/agent-session-check.yml` | _(planned)_ Verifies handoff records exist before PR merge | pull_request | SOP-NLT-001 |
+| `.github/workflows/incident-detection.yml` | _(planned)_ Scans commits for credential exposure; opens incident issue | push | SOP-NLT-003 |
+| `.github/workflows/secret-scan-pr.yml` | _(planned)_ Scans PR commits for credential exposure; fails check to block merge | pull_request | SOP-NLT-003 |
+| `.github/workflows/org-repo-compliance.yml` | _(planned)_ Scans all org repos for mandatory governance files | schedule, workflow_dispatch | SOP-NLT-002 |
+| `.github/workflows/agent-profile-validation.yml` | _(planned)_ Validates agents/*.md NLT frontmatter fields | push, pull_request | SOP-NLT-002 |
+| `.github/workflows/nltotoi-check.yml` | _(planned)_ Reusable workflow_call to validate nltotoi.json in any NLT repo | workflow_call | SOP-NLT-002 |
 
 ---
 
@@ -80,7 +73,7 @@
 
 | Path | Purpose |
 |---|---|
-| `.github/actions/cloudflare-workers-ai/action.yml` | Call Cloudflare Workers AI REST API (text gen, embeddings, classification) |
+| `.github/actions/cloudflare-workers-ai/action.yml` | _(planned)_ Call Cloudflare Workers AI REST API (text gen, embeddings, classification) |
 
 ---
 

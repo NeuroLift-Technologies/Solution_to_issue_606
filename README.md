@@ -40,7 +40,7 @@ The test suite validates example TOI contracts against the schema and ensures pr
 ## Core Workflow
 
 1. **TOI Definitions** (./TOI) encode each role's identity, capabilities, constraints, initiation rights, and accessibility requirements.
-2. **Schema Enforcement** (./SCHEMAS/toi.schema.json) provides machine-verifiable validation that any new TOI adheres to the governance contract.
+2. **Schema Enforcement** (via `@neurolift-technologies/toi`) provides machine-verifiable validation that any new TOI adheres to the canonical governance contract published by NeuroLift Technologies.
 3. **Runtime Functions** (./FUNCTIONS):
    - `attachTOIOnAgentJoin.ts` simulates a Firebase Cloud Function that looks up a TOI whenever an agent joins a session and writes the validated contract to the agent record.
    - `validateTOI.ts` validates TOI documents against the canonical schema published by `@neurolift-technologies/toi`, providing standard-conformant safety checks.

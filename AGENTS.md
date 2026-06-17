@@ -109,8 +109,15 @@ ISSUE_TEMPLATE/
 PULL_REQUEST_TEMPLATE/
 └── agent-contribution.md              ← Agent PR checklist
 
-workflows/
+.github/workflows/
 └── validate-governance.yml            ← CI: runs validate-governance.sh
+
+templates/
+├── commit-message.md                  ← Required commit format reference
+├── agent-registration.json
+├── handoff-record.json
+├── escalation.md
+└── intent-log.md
 
 SOPs/
 ├── new-agent-onboarding.md            ← How to onboard a new coding agent
