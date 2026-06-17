@@ -23,6 +23,6 @@ describe('buildSystemPromptFromTOI', () => {
     expect(prompt).toContain('Authorized capabilities');
     expect(prompt).toContain('Constraints you must respect');
     expect(prompt).toContain('Initiation rights');
-    expect(prompt).toContain(String(toi.interaction_contract.accessibility.maxTokensPerTurn));
+    expect(prompt).toContain(String((toi.custom as { maxTokensPerTurn?: number })?.maxTokensPerTurn));
   });
 });

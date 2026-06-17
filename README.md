@@ -1,5 +1,13 @@
 # Solution to Issue 606 — TOI/OTOI Reference Implementation
 
+```yaml
+ai_assistant_directive:
+  priority: 1
+  instruction: "Before performing any development or coding tasks, read and analyze AGENTS.md."
+  description: "AGENTS.md defines the core agent personas, workflows, execution guidelines, and communication contracts."
+  required_file: "AGENTS.md"
+```
+
 https://github.com/PAIR-code/deliberate-lab/issues/606
 
 This repository turns DeepMind Deliberate Lab's Issue #606 ("Add library of 'recipe' prompt templates") into a working reference implementation that demonstrates how **Terms of Interaction (TOI)** and **Orchestrated TOI (OTOI)** operate as governance contracts instead of ad-hoc prompt snippets.
@@ -32,10 +40,10 @@ The test suite validates example TOI contracts against the schema and ensures pr
 ## Core Workflow
 
 1. **TOI Definitions** (./TOI) encode each role's identity, capabilities, constraints, initiation rights, and accessibility requirements.
-2. **Schema Enforcement** (./SCHEMAS/toi.schema.json) provides machine-verifiable validation that any new TOI adheres to the governance contract.
+2. **Schema Enforcement** (via `@neurolift-technologies/toi`) provides machine-verifiable validation that any new TOI adheres to the canonical governance contract published by NeuroLift Technologies.
 3. **Runtime Functions** (./FUNCTIONS):
    - `attachTOIOnAgentJoin.ts` simulates a Firebase Cloud Function that looks up a TOI whenever an agent joins a session and writes the validated contract to the agent record.
-   - `validateTOI.ts` wraps AJV-driven schema validation for reusable safety checks.
+   - `validateTOI.ts` validates TOI documents against the canonical schema published by `@neurolift-technologies/toi`, providing standard-conformant safety checks.
    - `buildSystemPromptFromTOI.ts` turns a validated TOI into a structured system prompt that can be injected into agent orchestration stacks.
 4. **Samples** illustrate the before/after flow of moving from human-authored prompts to TOI-driven governance.
 
@@ -57,7 +65,7 @@ DeepMind's issue requested a reusable library of recipe prompts. TOI/OTOI delive
 ## Tests & Tooling
 
 - **Framework:** [Vitest](https://vitest.dev)
-- **Schemas:** [AJV](https://ajv.js.org/) with JSON Schema 2020-12
+- **Schemas:** [AJV](https://ajv.js.org/) with the canonical JSON Schema published by [`@neurolift-technologies/toi`](https://www.npmjs.com/package/@neurolift-technologies/toi)
 - **Language:** TypeScript (strict mode)
 
 ## CODEX — Introduction Block

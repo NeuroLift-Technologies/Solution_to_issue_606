@@ -1,0 +1,9 @@
+{
+  "$toi": "1.0.0",
+  "$tier": "project",
+  "identity": {},
+  "custom": {
+    "role": "test",
+    "description": "Invalid because identity.author is missing (required field)"
+  }
+}
