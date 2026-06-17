@@ -43,7 +43,7 @@ The test suite validates example TOI contracts against the schema and ensures pr
 2. **Schema Enforcement** (./SCHEMAS/toi.schema.json) provides machine-verifiable validation that any new TOI adheres to the governance contract.
 3. **Runtime Functions** (./FUNCTIONS):
    - `attachTOIOnAgentJoin.ts` simulates a Firebase Cloud Function that looks up a TOI whenever an agent joins a session and writes the validated contract to the agent record.
-   - `validateTOI.ts` wraps AJV-driven schema validation for reusable safety checks.
+   - `validateTOI.ts` validates TOI documents against the canonical schema published by `@neurolift-technologies/toi`, providing standard-conformant safety checks.
    - `buildSystemPromptFromTOI.ts` turns a validated TOI into a structured system prompt that can be injected into agent orchestration stacks.
 4. **Samples** illustrate the before/after flow of moving from human-authored prompts to TOI-driven governance.
 
@@ -65,7 +65,7 @@ DeepMind's issue requested a reusable library of recipe prompts. TOI/OTOI delive
 ## Tests & Tooling
 
 - **Framework:** [Vitest](https://vitest.dev)
-- **Schemas:** [AJV](https://ajv.js.org/) with JSON Schema 2020-12
+- **Schemas:** [AJV](https://ajv.js.org/) with the canonical JSON Schema published by [`@neurolift-technologies/toi`](https://www.npmjs.com/package/@neurolift-technologies/toi)
 - **Language:** TypeScript (strict mode)
 
 ## CODEX — Introduction Block

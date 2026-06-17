@@ -22,6 +22,6 @@ describe('TOI validation', () => {
     const result = await validateTOI(candidate);
     expect(result.valid).toBe(false);
     expect(result.errors).toBeDefined();
-    expect(result.errors?.some((error) => error.message.includes('required'))).toBe(true);
+    expect(result.errors?.some((error) => error.message.toLowerCase().includes('required'))).toBe(true);
   });
 });
