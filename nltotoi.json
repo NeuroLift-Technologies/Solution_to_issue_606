@@ -32,7 +32,7 @@
     "ISSUE_TEMPLATE/agent-escalation.md",
     "ISSUE_TEMPLATE/governance-proposal.md",
     "PULL_REQUEST_TEMPLATE/agent-contribution.md",
-    "workflows/validate-governance.yml",
+    ".github/workflows/validate-governance.yml",
     "SOPs/new-agent-onboarding.md",
     "SOPs/repo-governance-setup.md",
     "SOPs/incident-response.md"

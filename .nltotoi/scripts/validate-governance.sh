@@ -79,10 +79,11 @@ check_file_age() {
     return 0
   fi
   local mtime now age_days
-  # Try BSD stat (-r flag), then GNU stat (-c flag).  If both fail, skip the
-  # check and emit a warning rather than silently misreporting the age.
-  mtime="$(date -r "${REPO_ROOT}/${file}" +%s 2>/dev/null \
-           || stat -c %Y "${REPO_ROOT}/${file}" 2>/dev/null)" || {
+  # Try BSD stat -f %m (macOS), then GNU stat -c %Y (Linux), then date -r (fallback).
+  # If all fail, skip the check and emit a warning rather than silently misreporting.
+  mtime="$(stat -f %m "${REPO_ROOT}/${file}" 2>/dev/null \
+           || stat -c %Y "${REPO_ROOT}/${file}" 2>/dev/null \
+           || date -r "${REPO_ROOT}/${file}" +%s 2>/dev/null)" || {
     echo "  ⚠️  AGE CHECK SKIPPED (cannot read mtime): ${file}"
     ((WARN++)) || true
     return 0
@@ -151,6 +152,22 @@ check_content "AGENTS.md"        "ORG-DEV-OTOI-1.0.2"            "Document ID in
 check_content "nltotoi.json"     "NeuroLift-Technologies/Solution_to_issue_606" "Repository name in manifest"
 check_content "nltotoi.json"     "ORG-DEV-OTOI-1.0.2"            "Document ID in manifest"
 check_content "nltotoi.json"     "NLT-DEV-OTOI.md"               "Canonical contract path in manifest"
+
+echo ""
+
+# --- File Health Checks ---
+echo "[ File Health Checks ]"
+health_files=(
+  "NLT-DEV-OTOI.md"
+  "AGENTS.md"
+  "nltotoi.json"
+  ".nltotoi/scripts/validate-governance.sh"
+)
+
+for f in "${health_files[@]}"; do
+  check_file_not_empty "$f"
+  check_file_age "$f" 365
+done
 
 echo ""
 
