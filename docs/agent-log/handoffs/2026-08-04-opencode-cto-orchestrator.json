@@ -47,6 +47,6 @@
       "bash .nltotoi/scripts/validate-governance.sh --strict: 37 passed, 0 failed, 0 warned"
     ],
     "tests_passing": true,
-    "pr_url": "[pending — fill after PR creation]"
+    "pr_url": "https://github.com/NeuroLift-Technologies/Solution_to_issue_606/pull/10"
   }
 }
