@@ -58,6 +58,17 @@ describe('enforceCrossAgentRules', () => {
     const { errors } = enforceCrossAgentRules(agents);
     expect(errors.join(' ')).toContain("requires at least one agent with role 'participant'");
   });
+
+  it('accepts multiple participants of a plural role', async () => {
+    const tois = await Promise.all(['participant', 'debate_moderator'].map(loadTOIForRole));
+    const agents: OtoiParticipant[] = [
+      { agent_id: 'p1', role: 'participant', toi: tois[0] },
+      { agent_id: 'p2', role: 'participant', toi: tois[0] },
+      { agent_id: 'm1', role: 'debate_moderator', toi: tois[1] },
+    ];
+    const { errors } = enforceCrossAgentRules(agents);
+    expect(errors).toEqual([]);
+  });
 });
 
 describe('loadOtoiForSession', () => {
@@ -95,6 +106,22 @@ describe('loadOtoiForSession', () => {
     ]);
     expect(result.valid).toBe(false);
     expect(result.errors?.join(' ')).toContain('No TOI definition found for role: ghost');
+  });
+
+  it('builds a valid session OTOI for multiple participants', async () => {
+    const result = await loadOtoiForSession('debate-006', [
+      participant('p1', 'participant'),
+      participant('p2', 'participant'),
+      participant('m1', 'debate_moderator'),
+    ]);
+    expect(result.valid).toBe(true);
+    expect(result.otoi?.participants).toHaveLength(3);
+  });
+
+  it('rejects an empty session', async () => {
+    const result = await loadOtoiForSession('debate-007', []);
+    expect(result.valid).toBe(false);
+    expect(result.errors?.join(' ')).toContain("requires at least one agent with role 'participant'");
   });
 
   it('emits an OTOI document conformant with SCHEMAS/otoi.schema.json', async () => {

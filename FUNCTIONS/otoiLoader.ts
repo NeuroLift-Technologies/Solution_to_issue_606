@@ -38,6 +38,8 @@ export interface OtoiLoadResult {
   errors?: string[];
 }
 
+export const OTOI_SESSION_VERSION = '1.0.0';
+
 /** Normalizes an escalation reference to a plain role token (e.g. '/debate_moderator' -> 'debate_moderator'). */
 function normalizeRoleRef(ref: string): string {
   const lastSegment = ref.split('/').filter(Boolean).pop() ?? '';
@@ -74,9 +76,8 @@ export function enforceCrossAgentRules(participants: OtoiParticipant[]): { rules
   const roles = participants.map((participant) => participant.role);
   const presentRoles = new Set(roles);
 
-  const knownRoles = KNOWN_ROLES.filter((role) => roles.includes(role));
-  if (knownRoles.length !== roles.length) {
-    const unknownRoles = [...new Set(roles.filter((role) => !KNOWN_ROLES.includes(role)))];
+  const unknownRoles = [...new Set(roles.filter((role) => !KNOWN_ROLES.includes(role)))];
+  if (unknownRoles.length > 0) {
     errors.push(`Unknown role(s) in session: ${unknownRoles.join(', ')}`);
   }
   rules.push({
@@ -168,7 +169,7 @@ export async function loadOtoiForSession(
   }
 
   const otoi: OtoiSession = {
-    otoi_version: '1.0.0',
+    otoi_version: OTOI_SESSION_VERSION,
     session_id: sessionId,
     created: new Date().toISOString(),
     participants,
