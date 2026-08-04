@@ -18,7 +18,7 @@ This repository turns DeepMind Deliberate Lab's Issue #606 ("Add library of 'rec
 solution_to_issue_606/
 ├── TOI/                  # Role-specific TOI JSON contracts
 ├── SCHEMAS/              # JSON Schema definitions for TOI + OTOI
-├── FUNCTIONS/            # TypeScript utilities for attaching + validating TOIs
+├── FUNCTIONS/            # TypeScript utilities for attaching, validating, orchestrating TOIs
 ├── SAMPLES/              # Narrative examples that map before/after workflows
 ├── TESTS/                # Vitest suites + fixtures
 └── HANDOFFS/             # Downstream instructions for other ElevAItors
@@ -45,6 +45,7 @@ The test suite validates example TOI contracts against the schema and ensures pr
    - `attachTOIOnAgentJoin.ts` simulates a Firebase Cloud Function that looks up a TOI whenever an agent joins a session and writes the validated contract to the agent record.
    - `validateTOI.ts` validates TOI documents against the canonical schema published by `@neurolift-technologies/toi`, providing standard-conformant safety checks.
    - `buildSystemPromptFromTOI.ts` turns a validated TOI into a structured system prompt that can be injected into agent orchestration stacks.
+   - `otoiLoader.ts` loads and validates one TOI per session agent, enforces cross-agent rules (known roles, singular-role uniqueness, required roles, escalation-path resolution), and emits a session-level OTOI contract.
 4. **Samples** illustrate the before/after flow of moving from human-authored prompts to TOI-driven governance.
 
 ## Why It Solves Issue #606
@@ -58,8 +59,8 @@ DeepMind's issue requested a reusable library of recipe prompts. TOI/OTOI delive
 
 ## Extending the Repo
 
-- Add more TOI JSON files for new roles and update `roleToFileMap` inside `attachTOIOnAgentJoin.ts`.
-- Implement an `OTOI` loader that correlates multiple TOIs per session and enforces cross-agent rules.
+- Add more TOI JSON files for new roles and register them in `roleToFileMap` inside `FUNCTIONS/roleRegistry.ts`.
+- Extend cross-agent session rules in `enforceCrossAgentRules` inside `FUNCTIONS/otoiLoader.ts`.
 - Replace the stubbed `AgentStore` interface with actual Firebase Admin SDK writes.
 
 ## Tests & Tooling

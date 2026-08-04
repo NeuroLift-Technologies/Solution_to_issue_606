@@ -1,14 +1,24 @@
+import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import Ajv from 'ajv';
 import type { TOI, ValidationError, ValidationResult } from './types.js';
 
-// Resolve the schema from the project root (process.cwd()) so the path is
-// stable whether this module runs from source or from a compiled dist/ output.
-const schemaPath = path.join(
-  process.cwd(),
-  'node_modules/@neurolift-technologies/toi/schema/toi-1.0.0.schema.json',
-);
+const CANONICAL_SCHEMA_RELATIVE = 'node_modules/@neurolift-technologies/toi/schema/toi-1.0.0.schema.json';
+
+// Prefer resolving relative to this module so the validator works regardless of
+// the process working directory; fall back to the project root for compiled dist/
+// layouts where node_modules sits at the repository root.
+function resolveCanonicalSchemaPath(): string {
+  const candidates = [
+    path.resolve(path.dirname(fileURLToPath(import.meta.url)), `../${CANONICAL_SCHEMA_RELATIVE}`),
+    path.join(process.cwd(), CANONICAL_SCHEMA_RELATIVE),
+  ];
+  return candidates.find((candidate) => existsSync(candidate)) ?? candidates[0];
+}
+
+const schemaPath = resolveCanonicalSchemaPath();
 
 let validatorPromise: Promise<Ajv> | undefined;
 
