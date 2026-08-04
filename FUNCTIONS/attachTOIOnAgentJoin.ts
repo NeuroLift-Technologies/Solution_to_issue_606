@@ -1,28 +1,7 @@
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
 import { AgentJoinPayload, AgentStore } from './firebaseTypes.js';
 import { TOI } from './types.js';
+import { loadTOIForRole } from './loadTOI.js';
 import { validateTOI } from './validateTOI.js';
-
-const roleToFileMap: Record<string, string> = {
-  debate_moderator: 'debate_moderator.v1.json',
-  participant: 'participant.v1.json',
-  observer: 'observer.v1.json',
-  facilitator: 'facilitator.v1.json',
-  neurodivergent_support: 'neurodivergent_support.v1.json',
-};
-
-const toiDirectory = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../TOI');
-
-async function loadTOIForRole(role: string): Promise<TOI> {
-  const fileName = roleToFileMap[role];
-  if (!fileName) {
-    throw new Error(`No TOI definition found for role: ${role}`);
-  }
-  const filePath = path.join(toiDirectory, fileName);
-  const fileContents = await readFile(filePath, 'utf-8');
-  return JSON.parse(fileContents) as TOI;
-}
 
 export interface AttachTOIOptions {
   store: AgentStore;
